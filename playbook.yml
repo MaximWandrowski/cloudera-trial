@@ -1,0 +1,51 @@
+---
+- name: Provision Cluster Nodes
+  hosts: all
+  gather_facts: true
+  tasks:
+
+    - name: Update System Packages
+      apt:
+        update_cache: yes
+        upgrade: dist
+
+    - name: Check if Reboot is Required
+      stat:
+        path: /var/run/reboot-required
+      register: reboot_required
+
+    - name: Reboot
+      reboot:
+      when: reboot_required.stat.exists
+
+    - name: Install Python Pip
+      apt:
+        name: python-pip
+        state: latest
+
+    - name: Install psycopg2
+      pip:
+        name: psycopg2==2.7.5
+
+    - name: Update /etc/hosts
+      lineinfile:
+        dest: /etc/hosts
+        regexp: '.*{{ item }}$'
+        line: "{{ hostvars[item]['ansible_facts']['eth1']['ipv4']['address'] }} {{item}}"
+        state: present
+      when: hostvars[item].ansible_host is defined
+      with_items: "{{ groups.all }}"
+
+- name: Cloudera Manager Installer
+  hosts: cloudera1
+  gather_facts: false
+  tasks:
+
+    - name: Download Cloudera Manager Installer
+      get_url:
+        url: https://archive.cloudera.com/cm7/7.1.4/cloudera-manager-installer.bin
+        dest: /home/vagrant/cloudera-manager-installer.bin
+        mode: "0744"
+        owner: vagrant
+        group: vagrant
+...

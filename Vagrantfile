@@ -1,7 +1,8 @@
 ENV["LC_ALL"] = "en_US.UTF-8"
 
 Vagrant.configure("2") do |config|
-  (1..3).each do |i|
+  N = 3
+  (1..N).each do |i|
     config.vm.define "cloudera#{i}" do |node|
       node.vm.box      = "hashicorp/bionic64"
       node.vm.hostname = "cloudera#{i}"
@@ -11,6 +12,12 @@ Vagrant.configure("2") do |config|
         v.name   = "cloudera#{i}"
         v.memory = 8192
         v.cpus   = 8
+      end
+      if i == N
+        node.vm.provision "ansible" do |ansible|
+          ansible.limit = "all"
+          ansible.playbook = "playbook.yml"
+        end
       end
     end
   end
