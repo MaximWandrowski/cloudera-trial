@@ -21,7 +21,7 @@ It will then
 
 - Install System Updates
 - Reboot if necessary
-- Install system requirements for the Cloudera Manager Installer
+- Install System Requirements for Cloudera Manager Installer
 - Download the Cloudera Manager Installer
 
 ## Cloudera Manager Installer
@@ -33,8 +33,14 @@ installer][install]:
 sudo ./cloudera-manager-installer.bin
 ```
 
-Point your Web Browser at `http://10.0.0.11:7180` and [install Cloudera
-Runtime][runtime].
+## Install Cloudera Runtime
+
+- Point your Web Browser at `http://10.0.0.11:7180` and [install Cloudera
+  Runtime][runtime]. 
+- Specify Hosts: `cloudera[1-3]`
+- Enter Login Credentials
+  - Another User: `vagrant`
+  - All hosts accept same password: `vagrant`
 
 [install]: https://docs.cloudera.com/cdp-private-cloud-base/7.1.6/installation/topics/cdp-quick-start-streams-run-cm-server-installer.html
 [runtime]: https://docs.cloudera.com/cdp-private-cloud-base/7.1.6/installation/topics/cdp-quick-start-deployment-streams-install-runtime.html

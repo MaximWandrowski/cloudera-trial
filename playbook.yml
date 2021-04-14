@@ -4,10 +4,25 @@
   gather_facts: true
   tasks:
 
+    - name: Update /etc/hosts
+      lineinfile:
+        dest: /etc/hosts
+        regexp: '.*{{ item }}$'
+        line: "{{ hostvars[item]['ansible_facts']['eth1']['ipv4']['address'] }} {{item}}"
+        state: present
+      when: hostvars[item].ansible_host is defined
+      with_items: "{{ groups.all }}"
+
     - name: Update System Packages
       apt:
         update_cache: yes
         upgrade: dist
+
+    - name: Configure Swappiness
+      lineinfile:
+        dest: /etc/sysctl.conf
+        line: vm.swappiness=1
+        state: present
 
     - name: Check if Reboot is Required
       stat:
@@ -27,14 +42,13 @@
       pip:
         name: psycopg2==2.7.5
 
-    - name: Update /etc/hosts
-      lineinfile:
-        dest: /etc/hosts
-        regexp: '.*{{ item }}$'
-        line: "{{ hostvars[item]['ansible_facts']['eth1']['ipv4']['address'] }} {{item}}"
-        state: present
-      when: hostvars[item].ansible_host is defined
-      with_items: "{{ groups.all }}"
+    - name: Get Swappiness
+      command: cat /proc/sys/vm/swappiness
+      register: swappiness
+
+    - name: Set Swappiness
+      command: sysctl vm.swappiness=1
+      when: swappiness.stdout|int != 1
 
 - name: Cloudera Manager Installer
   hosts: cloudera1
