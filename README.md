@@ -4,17 +4,16 @@
 
 Issuing `vagrant up` will bootstrap three virtual machines
 
+- cloudera0
 - cloudera1
-- cloudera2
-- cloudera3
 
 Each of them with
 
 - Ubuntu 18.04
 - 8 CPUs
-- 8 GiB RAM
+- 12 GiB RAM
 - 64 GiB HDD
-- Private IP 10.0.0.1{1..N}
+- Private IP 10.0.0.1{0..N-1}
 - Internet via NAT
 
 It will then
@@ -37,7 +36,7 @@ sudo ./cloudera-manager-installer.bin
 
 - Point your Web Browser at `http://10.0.0.11:7180` and [install Cloudera
   Runtime][runtime]. 
-- Specify Hosts: `cloudera[1-3]`
+- Specify Hosts: `cloudera[0-(N-1)]`
 - Enter Login Credentials
   - Another User: `vagrant`
   - All hosts accept same password: `vagrant`

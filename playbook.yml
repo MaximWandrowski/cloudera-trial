@@ -51,7 +51,7 @@
       when: swappiness.stdout|int != 1
 
 - name: Cloudera Manager Installer
-  hosts: cloudera1
+  hosts: cloudera0
   gather_facts: false
   tasks:
 
