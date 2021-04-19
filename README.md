@@ -12,7 +12,7 @@ machines
 
 Each of them with
 
-- Ubuntu 18.04
+- RHEL 7.9
 - 8 CPUs
 - 12 GiB RAM
 - 64 GiB HDD
