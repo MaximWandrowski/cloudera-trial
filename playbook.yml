@@ -41,7 +41,8 @@
     - name: Install psycopg2
       pip:
         name: psycopg2==2.7.5
-
+    - name: Remote RPM install with yum
+      yum: name=http://mirror.centos.org/centos/7/os/x86_64/Packages/libicu-50.2-4.el7_7.x86_64.rpm
     - name: Get Swappiness
       command: cat /proc/sys/vm/swappiness
       register: swappiness
