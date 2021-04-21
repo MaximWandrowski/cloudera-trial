@@ -4,7 +4,7 @@ Vagrant.configure("2") do |config|
   N = 2
   (0..N-1).each do |i|
     config.vm.define "cloudera#{i}" do |node|
-      node.vm.box      = "generic/rhel7"
+      node.vm.box      = "alvistack/centos-7"
       node.vm.hostname = "cloudera#{i}"
       node.vm.disk "disk", size: "64GiB"
       node.vm.network  "private_network", ip: "10.0.0.#{10+i}"
