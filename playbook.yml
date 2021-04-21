@@ -50,7 +50,9 @@
     - name: Set Swappiness
       command: sysctl vm.swappiness=1
       when: swappiness.stdout|int != 1
-
+    - name: Flush iptables
+      iptables:
+        flush: yes
 - name: Cloudera Manager Installer
   hosts: cloudera0
   gather_facts: false
