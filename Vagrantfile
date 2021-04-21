@@ -11,7 +11,7 @@ Vagrant.configure("2") do |config|
       node.vm.provider "virtualbox" do |v|
         v.name   = "cloudera#{i}"
         v.memory = 12288
-        v.cpus   = 8
+        v.cpus   = 4
       end
       if i == N-1
         node.vm.provision "ansible" do |ansible|
