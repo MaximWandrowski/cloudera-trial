@@ -53,6 +53,16 @@
     - name: Flush iptables
       iptables:
         flush: yes
+    - name: Install sysfsutils for disabling Transparent Huge Pages
+      package:
+        name: sysfsutils
+    - name: Configure sysfsutils for disabling Transparent Huge Pages
+      lineinfile:
+        path: /etc/sysfs.conf
+        line: kernel/mm/transparent_hugepage/enabled = never
+        create: true
+    - name: Disable Transparent Huge Pages for this session
+      shell: echo never {{ ">" }} /sys/kernel/mm/transparent_hugepage/enabled && echo never {{ ">" }} /sys/kernel/mm/transparent_hugepage/defrag
 - name: Cloudera Manager Installer
   hosts: cloudera0
   gather_facts: false
