@@ -17,6 +17,7 @@ Vagrant.configure("2") do |config|
         node.vm.provision "ansible" do |ansible|
           ansible.limit = "all"
           ansible.playbook = "playbook.yml"
+          ansible.start_at_task = ENV['START_AT_TASK']
         end
       end
     end
